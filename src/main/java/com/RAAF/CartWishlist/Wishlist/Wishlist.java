@@ -3,16 +3,16 @@ package com.RAAF.CartWishlist.Wishlist;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.UUID;
 
 @Table
 public class Wishlist {
     @PrimaryKey
     UUID userID;
-    String[] wishlistItems;
+    Set<String> wishlistItems;
 
-    public Wishlist(UUID userID, String[] wishlistItems) {
+    public Wishlist(UUID userID, Set<String> wishlistItems) {
         this.userID = userID;
         this.wishlistItems = wishlistItems;
     }
@@ -20,5 +20,12 @@ public class Wishlist {
     public String toString() {
         return "user ID:" + userID + "/n" +
                 "WishList:" + wishlistItems;
+    }
+
+    public UUID getUserID() {
+        return userID;
+    }
+    public Object getWishlistItems() {
+        return wishlistItems;
     }
 }

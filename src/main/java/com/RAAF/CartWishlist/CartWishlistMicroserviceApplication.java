@@ -8,12 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
+import java.util.*;
 
 @SpringBootApplication
 @RestController
@@ -32,18 +31,17 @@ public class CartWishlistMicroserviceApplication {
 	@Bean
 	public CommandLineRunner clr(WishlistRepository wishlistRepository) {
 		return args -> {
-			wishlistRepository.deleteAll();
 
-			Wishlist w1 = new Wishlist(UUID.randomUUID(), new String[]{"John"});
-			Wishlist w2 = new Wishlist(UUID.randomUUID(),new String[]{"Jane"});
+			Wishlist w1 = new Wishlist(UUID.randomUUID(),  new HashSet<>(Arrays.asList("BikoSiko")));
+			Wishlist w2 = new Wishlist(UUID.randomUUID(), new HashSet<>(Arrays.asList("SikoTiko")));
 			Wishlist savedJohn = wishlistRepository.save(w1);
-			Wishlist savedJane = wishlistRepository.save(w2);
+			wishlistRepository.save(w2);
 
 			wishlistRepository.findAll()
-					.forEach(v -> log.info("Vet: {}", v.getFirstName()));
+					.forEach(w -> System.out.println(w.getWishlistItems()));
 
-			wishlistRepository.findById(savedJohn.getId())
-					.ifPresent(v -> log.info("Vet by id: {}", v.getFirstName()));
+			wishlistRepository.findById(savedJohn.getUserID())
+					.ifPresent(v -> log.info("Vet by id: {}", v.getUserID()));
 		};
 	}
 }

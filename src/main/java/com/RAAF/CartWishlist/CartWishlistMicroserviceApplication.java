@@ -18,8 +18,7 @@ import java.util.*;
 @RestController
 @RequestMapping
 public class CartWishlistMicroserviceApplication {
-	private final static Logger log = LoggerFactory.getLogger(CartWishlistMicroserviceApplication.class);
-
+	public static ArrayList<UUID> tempUser = new ArrayList<>();
 	public static void main(String[] args) {
 		SpringApplication.run(CartWishlistMicroserviceApplication.class, args);
 	}
@@ -31,18 +30,33 @@ public class CartWishlistMicroserviceApplication {
 	@Bean
 	public CommandLineRunner clr(WishlistRepository wishlistRepository) {
 		return args -> {
+			wishlistRepository.deleteAll();
 
-			Wishlist w1 = new Wishlist(UUID.randomUUID(),  new HashSet<>(Arrays.asList("BikoSiko")));
-			Wishlist w2 = new Wishlist(UUID.randomUUID(), new HashSet<>(Arrays.asList("SikoTiko")));
+			UUID user1 = UUID.randomUUID();
+			tempUser.add(user1);
+			UUID user2 = UUID.randomUUID();
+			tempUser.add(user2);
+			UUID user3 = UUID.randomUUID();
+			tempUser.add(user3);
+			Wishlist w1 = new Wishlist(user1,  new HashSet<>(Arrays.asList("CACJN0CI0Q8HQ2", "KFDH9QD8YJ12@", "LJASBUCAICBA$","UGD86@3IOYRKJ")));
+			Wishlist w2 = new Wishlist(user2, new HashSet<>(Arrays.asList("")));
+			Wishlist w3 = new Wishlist(user3, new HashSet<>(Arrays.asList("WDLJBQFI$7")));
+
 			Wishlist savedJohn = wishlistRepository.save(w1);
 			wishlistRepository.save(w2);
+			wishlistRepository.save(w3);
+
 
 			wishlistRepository.findAll()
 					.forEach(w -> System.out.println(w.getWishlistItems()));
 
-			wishlistRepository.findById(savedJohn.getUserID())
-					.ifPresent(v -> log.info("Vet by id: {}", v.getUserID()));
+			wishlistRepository.findById(user1)
+					.ifPresent(v -> System.out.println(v.getUserID()));
 		};
+	}
+
+	public static ArrayList<UUID> getTempUser() {
+		return tempUser;
 	}
 }
 

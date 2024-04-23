@@ -3,6 +3,7 @@ package com.RAAF.CartWishlist.Wishlist;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class Wishlist {
     public UUID getUserID() {
         return userID;
     }
-    public Object getWishlistItems() {
+    public Set<String> getWishlistItems() {
         return wishlistItems;
     }
 }

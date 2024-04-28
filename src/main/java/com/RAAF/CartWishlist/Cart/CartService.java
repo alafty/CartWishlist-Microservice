@@ -16,10 +16,8 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public Set<String> viewCart() {
-        //TODO: Fetch current user ID from other microservice
-        UUID currentUser = (UUID) CartWishlistMicroserviceApplication.getTempUser().get(0);
-        Cart currentCart = cartRepository.findById(currentUser)
+    public Set<String> viewCart(UUID userID) {
+        Cart currentCart = cartRepository.findById(userID)
                 .orElse(null);
         return currentCart.getCartItems();
     }

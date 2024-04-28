@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "cart/v1/")
+@RequestMapping(path = "cart/")
 @Component
 public class CartController {
     private final CartService cartService;
@@ -18,17 +18,17 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping
-    public Set<String> viewCart() {
-        return cartService.viewCart();
+    @GetMapping("/view")
+    public Set<String> viewCart(@RequestParam("userId") String userID) {
+        return cartService.viewCart(UUID.fromString(userID));
     }
 
-    @PostMapping
-    public void addUser(@RequestBody String newUserID) {
-        //TODO: Make sure to actually send the UUID when integrating
-        System.out.println(newUserID);
-        cartService.addUser(UUID.randomUUID());
-    }
+//    @PostMapping
+//    public void addUser(@RequestBody String newUserID) {
+//        //TODO: Make sure to actually send the UUID when integrating
+//        System.out.println(newUserID);
+//        cartService.addUser(UUID.randomUUID());
+//    }
 
     @PutMapping
     public void addItemToCart(@RequestBody String userID, String itemID) {

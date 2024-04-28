@@ -22,24 +22,25 @@ public class CartController {
     public Set<String> viewCart(@RequestParam("userId") String userID) {
         return cartService.viewCart(UUID.fromString(userID));
     }
+    @GetMapping("/amount")
+    public double amountCart(@RequestParam("userId") String userID) {
+        return cartService.getTotalCartAmount(UUID.fromString(userID));
+    }
 
-//    @PostMapping
-//    public void addUser(@RequestBody String newUserID) {
-//        //TODO: Make sure to actually send the UUID when integrating
-//        System.out.println(newUserID);
-//        cartService.addUser(UUID.randomUUID());
-//    }
 
-    @PutMapping
+    @PutMapping("/add")
     public void addItemToCart(@RequestBody String userID, String itemID) {
-        //TODO: Make sure to actually send the UUID when integrating
-        System.out.println(itemID);
         cartService.addItemToCart(UUID.fromString(userID), itemID);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public void deleteItem(@RequestBody String userID, String itemID) {
-        //TODO: Make sure to actually send the UUID and actual String when integrating
         cartService.deleteItem(UUID.fromString(userID), itemID);
     }
+
+    @DeleteMapping("/empty")
+    public void emptyCart(@RequestBody String userID) {
+        cartService.emptyCart(UUID.fromString(userID));
+    }
+
 }

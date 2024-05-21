@@ -33,7 +33,6 @@ public class CartWishlistMicroserviceApplication {
 	public CommandLineRunner clr(WishlistRepository wishlistRepository) {
 		return args -> {
 			wishlistRepository.deleteAll();
-
 			UUID user1 = UUID.randomUUID();
 			tempUser.add(user1);
 			UUID user2 = UUID.randomUUID();

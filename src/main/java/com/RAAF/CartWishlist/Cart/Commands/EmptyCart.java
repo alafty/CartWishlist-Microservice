@@ -1,15 +1,26 @@
 package com.RAAF.CartWishlist.Cart.Commands;
 
-import com.RAAF.CartWishlist.Cart.Cart;
+import com.RAAF.CartWishlist.Cart.CartService;
 import com.RAAF.CartWishlist.Command;
 
-public class EmptyCart implements Command {
-    Cart cart;
+import java.util.Set;
+import java.util.UUID;
 
-    public EmptyCart(Cart cart) {
+public class EmptyCart implements Command {
+    CartService cart;
+
+    public EmptyCart(CartService cart) {
         this.cart = cart;
     }
-    public void execute() {
+    public void execute(UUID id) {
+        cart.emptyCart(id);
+    }
 
+    public void execute(UUID userID, String itemID) {
+
+    }
+
+    public Set<String> executeGet() {
+        return null;
     }
 }

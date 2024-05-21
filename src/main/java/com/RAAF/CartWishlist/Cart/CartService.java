@@ -17,37 +17,38 @@ public class CartService {
     }
 
     public Set<String> viewCart(UUID userID) {
-        Cart currentCart = cartRepository.findById(userID)
+        System.out.println("I'mHere");
+        Cart currentCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
                 .orElse(null);
         return currentCart.getCartItems();
     }
 
     public void addUser(UUID newUserID) {
-        Cart newUserCart = new Cart(newUserID, new HashSet<>(List.of("")));
+        Cart newUserCart = new Cart(CartWishlistMicroserviceApplication.tempUser.get(0), new HashSet<>(List.of("")));
         cartRepository.save(newUserCart);
     }
 
     public void addItemToCart(UUID userID, String itemToBeAdded) {
-        Cart currentUserCart = cartRepository.findById(userID).orElse(null);
+        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0)).orElse(null);
 
         if (currentUserCart == null) {
-            addUser(userID);
-            currentUserCart = cartRepository.findById(userID).orElse(null);
+            addUser(CartWishlistMicroserviceApplication.tempUser.get(0));
+            currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0)).orElse(null);
         }
-        currentUserCart.getCartItems().add(itemToBeAdded);
+        currentUserCart.getCartItems().add("itemToBeAdded");
         cartRepository.save(currentUserCart);
     }
 
 
     public void deleteItem(UUID userID, String itemToBeDeleted) {
-        Cart currentUserCart = cartRepository.findById(userID)
+        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
                 .orElse(null);
-        currentUserCart.getCartItems().remove(itemToBeDeleted);
+        currentUserCart.getCartItems().remove("itemToBeDeleted");
         cartRepository.save(currentUserCart);
     }
 
     public void emptyCart(UUID userID) {
-        Cart currentUserCart = cartRepository.findById(userID)
+        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
                 .orElse(null);
         currentUserCart.getCartItems().clear();
         cartRepository.save(currentUserCart);

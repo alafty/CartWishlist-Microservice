@@ -1,9 +1,15 @@
 package com.RAAF.CartWishlist.Wishlist;
 
 import com.RAAF.CartWishlist.CartWishlistMicroserviceApplication;
+import com.RAAF.CartWishlist.Command;
+import com.RAAF.CartWishlist.Wishlist.Commands.AddItem;
+import com.RAAF.CartWishlist.Wishlist.Commands.AddUser;
+import com.RAAF.CartWishlist.Wishlist.Commands.DeleteItem;
+import com.RAAF.CartWishlist.Wishlist.Commands.ViewWishlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.UUID;
 import java.util.Set;
 
@@ -20,26 +26,29 @@ public class WishlistController {
 
     @GetMapping
     public Set<String> viewWishlist() {
-        return wishlistService.viewWishlist();
+        Command viewWishList = new ViewWishlist(this.wishlistService);
+        return viewWishList.executeGet();
     }
 
     @PostMapping
     public void addUser(@RequestBody String newUserID) {
-        //TODO: Make sure to actually send the UUID when integrating
         System.out.println(newUserID);
-        wishlistService.addUser(UUID.randomUUID());
+        Command addUser = new AddUser(this.wishlistService);
+        addUser.execute(UUID.fromString(newUserID));
     }
 
     @PutMapping
     public void addItemToWishlist(@RequestBody String userID, String itemID) {
         //TODO: Make sure to actually send the UUID when integrating
         System.out.println(itemID);
-        wishlistService.addItemToWishlist(CartWishlistMicroserviceApplication.getTempUser().get(0), "CACJN0CI0Q8HQ2");
+        Command addIem = new AddItem(this.wishlistService);
+        addIem.execute(CartWishlistMicroserviceApplication.getTempUser().get(0), "CACJN0CI0Q8HQ2");
     }
 
     @DeleteMapping
     public void deleteItem(@RequestBody String userID, String itemID) {
         //TODO: Make sure to actually send the UUID and actual String when integrating
-        wishlistService.deleteItem(CartWishlistMicroserviceApplication.getTempUser().get(0), "CACJN0CI0Q8HQ2");
+        Command deleteItem = new DeleteItem(this.wishlistService);
+        deleteItem.execute(CartWishlistMicroserviceApplication.getTempUser().get(0), itemID);
     }
 }

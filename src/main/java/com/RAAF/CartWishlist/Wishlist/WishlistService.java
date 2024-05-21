@@ -7,9 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+//Receiver
 @Service
 public class WishlistService {
-    private final WishlistRepository wishlistRepository;
+    public final WishlistRepository wishlistRepository;
 
     public WishlistService(WishlistRepository wishlistRepository) {
         this.wishlistRepository = wishlistRepository;

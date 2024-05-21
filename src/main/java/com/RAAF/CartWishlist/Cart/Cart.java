@@ -4,19 +4,20 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 
-@Table("user_carts")
+@Table
 public class Cart {
     @PrimaryKey
     private UUID userID;
-    private Set<String> cartItems;
+    private HashSet<String> cartItems;
 
     private Set<Double> cartItemsPrices;
 
-    public Cart(UUID userID, Set<String> cartItems) {
+    public Cart(UUID userID, HashSet<String> cartItems) {
         this.userID = userID;
         this.cartItems = cartItems;
     }

@@ -1,5 +1,6 @@
 package com.RAAF.CartWishlist.consumer;
 
+import com.RAAF.CartWishlist.CartWishlistMicroserviceApplication;
 import com.RAAF.CartWishlist.dto.User;
 import com.RAAF.CartWishlist.publisher.RabbitMQProducer;
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = {"${rabbitmq.queue.name}"})
     public void consume(User user) {
         LOGGER.info(String.format("Message received -> %s", user));
-
+        CartWishlistMicroserviceApplication.activeUserID = user.id;
     }
-
 }

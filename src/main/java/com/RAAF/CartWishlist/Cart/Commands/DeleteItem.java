@@ -1,10 +1,10 @@
 package com.RAAF.CartWishlist.Cart.Commands;
 
 import com.RAAF.CartWishlist.Cart.CartService;
+import com.RAAF.CartWishlist.CartWishlistMicroserviceApplication;
 import com.RAAF.CartWishlist.Command;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class DeleteItem implements Command {
     CartService cart;
@@ -12,12 +12,8 @@ public class DeleteItem implements Command {
     public DeleteItem(CartService cart) {
         this.cart = cart;
     }
-    public void execute(UUID uuid) {
-
-    }
-
-    public void execute(UUID userID, String itemID) {
-        cart.deleteItem(userID, itemID);
+    public void execute(String itemID) {
+        cart.deleteItem(CartWishlistMicroserviceApplication.activeUserID, itemID);
     }
 
     public Set<String> executeGet() {

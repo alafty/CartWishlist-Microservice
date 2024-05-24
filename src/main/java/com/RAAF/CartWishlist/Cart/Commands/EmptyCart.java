@@ -4,7 +4,6 @@ import com.RAAF.CartWishlist.Cart.CartService;
 import com.RAAF.CartWishlist.Command;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class EmptyCart implements Command {
     CartService cart;
@@ -12,11 +11,11 @@ public class EmptyCart implements Command {
     public EmptyCart(CartService cart) {
         this.cart = cart;
     }
-    public void execute(UUID id) {
+    public void execute(String id) {
         cart.emptyCart(id);
     }
 
-    public void execute(UUID userID, String itemID) {
+    public void execute(String userID, String itemID) {
 
     }
 

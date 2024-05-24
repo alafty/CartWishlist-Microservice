@@ -17,7 +17,6 @@ public class userMQController {
 
     @PostMapping
     public ResponseEntity<String> sendActiveUser(@RequestBody User user) {
-        System.out.println("Got-It");
         producer.sendMessage(user);
         return ResponseEntity.ok("User ID sent to RabbitMQ ...");
     }

@@ -22,7 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class CartWishlistMicroserviceApplication {
-	public static ArrayList<UUID> tempUser = new ArrayList<>();
+	public static ArrayList<String> tempUser = new ArrayList<>();
+
+	public static String activeUserID = "";
 	public static void main(String[] args) {
 		SpringApplication.run(CartWishlistMicroserviceApplication.class, args);
 	}
@@ -36,18 +38,18 @@ public class CartWishlistMicroserviceApplication {
 		return args -> {
 			wishlistRepository.deleteAll();
 			cartRepository.deleteAll();
-			UUID user1 = UUID.randomUUID();
+			String user1 = "user1";
 			tempUser.add(user1);
-			UUID user2 = UUID.randomUUID();
+			String user2 = "user2";
 			tempUser.add(user2);
-			UUID user3 = UUID.randomUUID();
+			String user3 = "user3";
 			tempUser.add(user3);
-			Wishlist w1 = new Wishlist(user1,  new HashSet<>(Arrays.asList("CACJN0CI0Q8HQ2", "KFDH9QD8YJ12@", "LJASBUCAICBA$","UGD86@3IOYRKJ")));
-			Wishlist w2 = new Wishlist(user2, new HashSet<>(Arrays.asList("")));
-			Wishlist w3 = new Wishlist(user3, new HashSet<>(Arrays.asList("WDLJBQFI$7")));
-			Cart c1 = new Cart(user1, new HashSet<>(Arrays.asList("3010ba")));
-			Cart c2 = new Cart(user2, new HashSet<>(Arrays.asList("3010ba", "FFABo")));
-			Cart c3 = new Cart(user3, new HashSet<>(Arrays.asList("")));
+			Wishlist w1 = new Wishlist(user1,  new HashSet<>(Arrays.asList("item2", "item4", "item6","item8")));
+			Wishlist w2 = new Wishlist(user2, new HashSet<>(Arrays.asList("item2, item6")));
+			Wishlist w3 = new Wishlist(user3, new HashSet<>(Arrays.asList("item8")));
+			Cart c1 = new Cart(user1, new HashSet<>(Arrays.asList("item1", "item3", "item5", "item7")));
+			Cart c2 = new Cart(user2, new HashSet<>(Arrays.asList("item1", "item3")));
+			Cart c3 = new Cart(user3, new HashSet<>(Arrays.asList("item5")));
 
 
 
@@ -75,7 +77,7 @@ public class CartWishlistMicroserviceApplication {
 		};
 	}
 
-	public static ArrayList<UUID> getTempUser() {
+	public static ArrayList<String> getTempUser() {
 		return tempUser;
 	}
 }

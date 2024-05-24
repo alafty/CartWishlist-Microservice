@@ -4,18 +4,17 @@ import com.RAAF.CartWishlist.Cart.CartService;
 import com.RAAF.CartWishlist.Command;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class GetTotalCart implements Command {
     CartService cart;
     public GetTotalCart(CartService cart) {
         this.cart = cart;
     }
-    public void execute(UUID uuid) {
+    public void execute(String uuid) {
 
     }
 
-    public void execute(UUID userID, String itemID) {
+    public void execute(String userID, String itemID) {
 
     }
 
@@ -23,7 +22,7 @@ public class GetTotalCart implements Command {
         return null;
     }
 
-    public double executeGet(UUID id) {
+    public double executeGet(String id) {
         return cart.getTotalCartAmount(id);
     }
 }

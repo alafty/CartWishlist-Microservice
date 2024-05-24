@@ -2,6 +2,7 @@ package com.RAAF.CartWishlist.Cart;
 
 import com.RAAF.CartWishlist.Cart.Commands.*;
 import com.RAAF.CartWishlist.Command;
+import com.RAAF.CartWishlist.dto.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -22,34 +23,38 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("view/")
-    public Set<String> viewCart(@RequestBody String userID) {
+    //DONE
+    @GetMapping()
+    public Set<String> viewCart() {
         ViewCart viewCart = new ViewCart(this.cartService);
-        return viewCart.executeGet(CartWishlistMicroserviceApplication.tempUser.get(0));
+        return viewCart.executeGet(CartWishlistMicroserviceApplication.activeUserID);
     }
+
     @GetMapping("amount/")
-    public double amountCart(@RequestBody String userID) {
+    public double amountCart() {
         GetTotalCart  totalCart = new GetTotalCart(cartService);
-        return totalCart.executeGet(CartWishlistMicroserviceApplication.tempUser.get(0));
+        return totalCart.executeGet(CartWishlistMicroserviceApplication.activeUserID);
     }
 
-
-    @PutMapping("add/")
-    public void addItemToCart(@RequestBody String userID, String itemID) {
+    //DONE
+    @PutMapping()
+    public void addItemToCart(@RequestBody Item itemID) {
         AddItem addItem = new AddItem(cartService);
-        addItem.execute(CartWishlistMicroserviceApplication.tempUser.get(0), itemID);
+        addItem.execute(itemID.id);
     }
 
-    @DeleteMapping("delete/")
-    public void deleteItem(@RequestBody String userID, String itemID) {
+    //DONE
+    @DeleteMapping()
+    public void deleteItem(@RequestBody Item itemID) {
         DeleteItem deleteItem = new DeleteItem(cartService);
-        deleteItem.execute(CartWishlistMicroserviceApplication.tempUser.get(0), itemID);
+        deleteItem.execute(itemID.id);
     }
+
 
     @DeleteMapping("empty/")
-    public void emptyCart(@RequestBody String userID) {
+    public void emptyCart() {
         EmptyCart emptyCart = new EmptyCart(cartService);
-        emptyCart.execute(CartWishlistMicroserviceApplication.tempUser.get(0));
+        emptyCart.execute(CartWishlistMicroserviceApplication.activeUserID);
     }
 
 }

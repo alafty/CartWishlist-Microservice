@@ -1,10 +1,10 @@
 package com.RAAF.CartWishlist.Cart.Commands;
 
 import com.RAAF.CartWishlist.Cart.CartService;
+import com.RAAF.CartWishlist.CartWishlistMicroserviceApplication;
 import com.RAAF.CartWishlist.Command;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class AddItem implements Command {
     CartService cart;
@@ -12,12 +12,9 @@ public class AddItem implements Command {
     public AddItem(CartService cart) {
         this.cart = cart;
     }
-    public void execute(UUID uuid) {
 
-    }
-
-    public void execute(UUID userID, String itemID) {
-        cart.addItemToCart(userID, itemID);
+    public void execute(String itemID) {
+        cart.addItemToCart(CartWishlistMicroserviceApplication.activeUserID, itemID);
     }
 
     public Set<String> executeGet() {

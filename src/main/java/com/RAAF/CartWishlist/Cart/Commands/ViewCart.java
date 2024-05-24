@@ -5,14 +5,13 @@ import com.RAAF.CartWishlist.Cart.CartService;
 import com.RAAF.CartWishlist.Command;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class ViewCart implements Command {
     CartService cart;
     public ViewCart(CartService cart) {
         this.cart = cart;
     }
-    public void execute(UUID userID, String itemID) {
+    public void execute(String userID, String itemID) {
 
     }
 
@@ -21,11 +20,11 @@ public class ViewCart implements Command {
         return null;
     }
 
-    public Set<String> executeGet(UUID userID) {
+    public Set<String> executeGet(String userID) {
         return cart.viewCart(userID);
     }
     @Override
-    public void execute(UUID uuid) {
+    public void execute(String uuid) {
 
     }
 }

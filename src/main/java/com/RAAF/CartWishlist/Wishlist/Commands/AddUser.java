@@ -4,7 +4,6 @@ import com.RAAF.CartWishlist.Command;
 import com.RAAF.CartWishlist.Wishlist.WishlistService;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class AddUser implements Command {
     WishlistService wishlist;
@@ -12,16 +11,9 @@ public class AddUser implements Command {
     public AddUser(WishlistService wishlist) {
         this.wishlist = wishlist;
     }
-    public void execute(UUID uuid) {
-        //TODO: Make sure to actually send the UUID when integrating
-        wishlist.addUser(UUID.randomUUID());
+    public void execute(String id) {
+        wishlist.addUser(id);
     }
-
-    @Override
-    public void execute(UUID userID, String itemID) {
-
-    }
-
     public Set<String> executeGet() {
         return null;
     }

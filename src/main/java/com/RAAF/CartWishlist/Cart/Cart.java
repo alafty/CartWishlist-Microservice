@@ -12,17 +12,17 @@ import java.util.UUID;
 @Table
 public class Cart {
     @PrimaryKey
-    private UUID userID;
+    private String userID;
     private HashSet<String> cartItems;
 
     private Set<Double> cartItemsPrices;
 
-    public Cart(UUID userID, HashSet<String> cartItems) {
+    public Cart(String userID, HashSet<String> cartItems) {
         this.userID = userID;
         this.cartItems = cartItems;
     }
 
-    public UUID getUserID() {
+    public String getUserID() {
         return userID;
     }
 

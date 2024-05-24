@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class CartService {
@@ -16,45 +15,50 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public Set<String> viewCart(UUID userID) {
-        System.out.println("I'mHere");
-        Cart currentCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
+    public Set<String> viewCart(String userID) {
+        Cart currentCart = cartRepository.findById(userID)
                 .orElse(null);
+        if(currentCart == null) {
+            addUser(userID);
+            currentCart = cartRepository.findById(userID)
+                    .orElse(null);
+        }
         return currentCart.getCartItems();
     }
 
-    public void addUser(UUID newUserID) {
-        Cart newUserCart = new Cart(CartWishlistMicroserviceApplication.tempUser.get(0), new HashSet<>(List.of("")));
+    public void addUser(String newUserID) {
+        Cart newUserCart = new Cart(newUserID, new HashSet<>(List.of("")));
         cartRepository.save(newUserCart);
     }
 
-    public void addItemToCart(UUID userID, String itemToBeAdded) {
-        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0)).orElse(null);
+    public void addItemToCart(String userID, String itemToBeAdded) {
+        Cart currentUserCart = cartRepository.findById(userID).orElse(null);
 
         if (currentUserCart == null) {
-            addUser(CartWishlistMicroserviceApplication.tempUser.get(0));
-            currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0)).orElse(null);
+            addUser(userID);
+            currentUserCart = cartRepository.findById(userID).orElse(null);
         }
-        currentUserCart.getCartItems().add("itemToBeAdded");
+        currentUserCart.getCartItems().add(itemToBeAdded);
         cartRepository.save(currentUserCart);
     }
 
 
-    public void deleteItem(UUID userID, String itemToBeDeleted) {
-        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
+    public void deleteItem(String userID, String itemToBeDeleted) {
+        Cart currentUserCart = cartRepository.findById(userID)
                 .orElse(null);
-        currentUserCart.getCartItems().remove("itemToBeDeleted");
+        currentUserCart.getCartItems().remove(itemToBeDeleted);
         cartRepository.save(currentUserCart);
     }
 
-    public void emptyCart(UUID userID) {
-        Cart currentUserCart = cartRepository.findById(CartWishlistMicroserviceApplication.tempUser.get(0))
+    public void emptyCart(String userID) {
+        Cart currentUserCart = cartRepository.findById(userID)
                 .orElse(null);
         currentUserCart.getCartItems().clear();
+        currentUserCart.getCartItems().add("");
         cartRepository.save(currentUserCart);
     }
 
-    public double getTotalCartAmount(UUID userID) {
+    public double getTotalCartAmount(String userID) {
         Cart currentCart = cartRepository.findById(userID).orElse(null);
 
         if (currentCart == null) {

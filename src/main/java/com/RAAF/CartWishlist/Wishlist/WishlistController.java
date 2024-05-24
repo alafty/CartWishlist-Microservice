@@ -6,7 +6,9 @@ import com.RAAF.CartWishlist.Wishlist.Commands.AddItem;
 import com.RAAF.CartWishlist.Wishlist.Commands.AddUser;
 import com.RAAF.CartWishlist.Wishlist.Commands.DeleteItem;
 import com.RAAF.CartWishlist.Wishlist.Commands.ViewWishlist;
+import com.RAAF.CartWishlist.publisher.RabbitMQProducer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +20,17 @@ import java.util.Set;
 @Component
 public class WishlistController {
     private final WishlistService wishlistService;
+    private RabbitMQProducer producer;
 
     @Autowired
-    public WishlistController(WishlistService wishlistService) {
+    public WishlistController(WishlistService wishlistService, RabbitMQProducer producer) {
+        this.producer = producer;
         this.wishlistService = wishlistService;
     }
 
     @GetMapping
     public Set<String> viewWishlist() {
+        System.out.println(ResponseEntity.ok("message sent"));
         Command viewWishList = new ViewWishlist(this.wishlistService);
         return viewWishList.executeGet();
     }

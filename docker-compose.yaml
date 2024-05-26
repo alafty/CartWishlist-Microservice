@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  cassandra:
+    image: cassandra:4.0.7
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./cassandra-data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra
+      - CASSANDRA_RPC_ADDRESS=0.0.0.0
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra
+      - CASSANDRA_BROADCAST_RPC_ADDRESS=cassandra
+#    networks:
+#      - backend
+
+  rabbitmq:
+    image: rabbitmq:3.13.2-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+#    networks:
+#      - backend
+
+  springboot-app:
+    image: spring-tofy:latest
+    container_name: springboot-app
+    depends_on:
+      - cassandra
+      - rabbitmq
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - RABBIT_HOST=rabbitmq
+      - CASSANDRA_HOST=cassandra
+#    networks:
+#        - backend
+
+#networks:
+#  backend:
+
